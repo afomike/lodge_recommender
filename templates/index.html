@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-wrap: wrap;
+            text-align: center;
+            /* background-color: #6a2eda; */
+        }
+
+        .input, .result {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .input {
+            background-color: #f9f9f9;
+        }
+
+        .result {
+            background-color: #e0e0e0;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+           width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        img {
+            width: 200px; /* Set a specific width */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        h1.intro {
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="intro">Welcome to the Lodges Recommender </h1>
+    <div class="input">
+        <h1>Please input how you want your Lodges </h1>
+        <form action="{{ url_for('main') }}" method="post">
+            <label for="House_Location">what Location whould you prefer:</label>
+            <select name="House_Location">
+                <option value="nnpc felele">nnpc felele</option>
+                <option value="motel 5 felele">motel 5 felele</option>
+                <option value="oworo felele">oworo felele</option>
+                <option value="felele">felele</option>
+                <option value="adankolo">adankolo</option>
+                <option value="crusher">crusher</option>
+                <option value="nasfat felele">nasfat felele</option>
+            </select><br>
+
+            <label for="Price">how much is your budget :</label>
+            <input type="number" name="Price" placeholder="Price"><br>
+
+            <label for="Amenities">what are the Amenities you would prefer:</label>
+            <select name="Amenities">
+                <option value="water and electricity">Water and Electricity</option>
+                <option value="electricity">Electricity</option>
+                <!-- Add more options as needed -->
+            </select><br>
+
+            <label for="Property_type">what type of Property:</label>
+            <select name="Property_type">
+                <option value="self contained">Self Contained</option>
+                <option value="single room">Single Room</option>
+                <!-- Add more options as needed -->
+            </select><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="result">
+        <ul>
+            {% for lodge in recommended_lodges %}
+            <h1>Recommended Lodges</h1>
+                <li>
+                    <p>House Location: {{ lodge['House_Location'] }}</p>
+                    <p>Price: {{ lodge['Price'] }}</p>
+                    <p>Amenities: {{ lodge['Amenities'] }}</p>
+                    <p>Agent Number: {{ lodge['Agent_no'] }}</p>
+                    <p>Property Type: {{ lodge['Property_type'] }}</p>
+                    <img src="{{ url_for('static', filename='images/' + lodge['House_Image']) }}" alt="House Image">
+                </li>
+            {% endfor %}
+        </ul> 
+        <ul>
+            {% for lodge in result %}
+            <h1>let recommed the best for you </h1>
+                <li>
+                    <p>House Location: {{ lodge['House_Location'] }}</p>
+                    <p>Price: {{ lodge['Price'] }}</p>
+                    <p>Amenities: {{ lodge['Amenities'] }}</p>
+                    <p>Agent Number: {{ lodge['Agent_no'] }}</p>
+                    <p>Property Type: {{ lodge['Property_type'] }}</p>
+                    <img src="{{ url_for('static', filename='images/' + lodge['House_Image']) }}" alt="House Image">
+                </li>
+            {% endfor %}
+        </ul> 
+    </div>
+    
+</body>
+</html>
